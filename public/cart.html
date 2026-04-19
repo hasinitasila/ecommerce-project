@@ -3,181 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart - E-Commerce</title>
-    <style>
-        /* Global Styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f7fc;
-            color: #333;
-        }
-
-        .container {
-            width: 80%;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-
-        /* Cart Item Styles */
-        .product-card {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: background-color 0.3s;
-        }
-
-        .product-card:hover {
-            background-color: #f9f9f9;
-        }
-
-        .product-card img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-right: 20px;
-            border-radius: 8px;
-        }
-
-        .product-card h3 {
-            font-size: 18px;
-            margin: 0;
-            color: #2c3e50;
-        }
-
-        .product-card p {
-            margin: 5px 0;
-            font-size: 16px;
-            color: #7f8c8d;
-        }
-
-        .product-card .price {
-            font-weight: bold;
-            color: #e74c3c;
-        }
-
-        /* Total Price Section */
-        #total-container {
-            margin-top: 20px;
-            text-align: right;
-            font-size: 20px;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        /* Buy Now Button */
-        #buy-now {
-            width: 100%;
-            padding: 15px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        #buy-now:hover {
-            background-color: #2980b9;
-        }
-
-        /* Back to Products Link */
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: #3498db;
-            font-size: 16px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Empty Cart Message */
-        #cart-container p {
-            text-align: center;
-            font-size: 18px;
-            color: #7f8c8d;
-        }
-    </style>
+    <title>Your Cart — KART</title>
+    <meta name="description" content="Review items in your shopping cart on KART.">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="brand-icon">🛒</span> KART
+        </a>
+        <ul class="navbar-links">
+            <li><a href="/products.html" id="nav-products">Products</a></li>
+            <li><a href="/wishlist.html" id="nav-wishlist">♡ Wishlist</a></li>
+            <li><a href="/cart.html" class="active" id="nav-cart">🛒 Cart</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <button class="btn btn-sm btn-secondary" id="logout-btn">Sign Out</button>
+        </div>
+    </nav>
+
+    <div class="page-header">
         <h1>Your Cart</h1>
-        <div id="cart-container"></div>
-        <div id="total-container"></div>
-        <button id="buy-now" class="button">Buy Now</button>
-        <a id="back-to-products" href="#">Back to Products</a>
+        <p>Review your items and checkout</p>
     </div>
 
+    <div class="list-container">
+        <div id="cart-container"></div>
+        <div id="summary-section" style="display:none;">
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span class="label">Subtotal</span>
+                    <span class="value" id="subtotal">₹0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Shipping</span>
+                    <span class="value" style="color: var(--success);">Free</span>
+                </div>
+                <div class="summary-row total">
+                    <span class="label">Total</span>
+                    <span class="value" id="total-amount">₹0.00</span>
+                </div>
+                <button class="btn btn-primary btn-lg mt-lg" style="width:100%;" id="buy-now-btn">Place Order</button>
+                <a href="/products.html" class="btn btn-secondary mt-md" style="width:100%;text-align:center;">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal">
+            <h2>Confirm Order</h2>
+            <p>Are you sure you want to place this order? Your cart will be cleared and the order will be processed.</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn btn-primary" id="modal-confirm">Confirm Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast-container" id="toast-container"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const username = new URLSearchParams(window.location.search).get('username');
-            if (!username) {
-                alert('Please log in to view your cart.');
-                return;
-            }
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icons = { success: '✓', error: '✕', info: 'ℹ' };
+            toast.className = 'toast toast-' + type;
+            toast.innerHTML = '<span>' + (icons[type] || '') + '</span> ' + message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3200);
+        }
 
-            // Set the dynamic username in the "Back to Products" link
-            const backToProductsLink = document.getElementById('back-to-products');
-            backToProductsLink.href = `products.html?username=${username}`;
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Auth check
+            const meRes = await fetch('/me');
+            if (!meRes.ok) { window.location.href = '/login'; return; }
 
-            fetch(`/cart?username=${username}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);  // Log the response to check its structure
-                    const cartContainer = document.getElementById('cart-container');
-                    const totalContainer = document.getElementById('total-container');
-                    let totalAmount = 0;
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', async () => {
+                await fetch('/logout', { method: 'POST' });
+                window.location.href = '/login';
+            });
 
-                    if (data.length === 0) {
-                        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+            await loadCart();
+
+            // Buy Now with modal
+            document.getElementById('buy-now-btn').addEventListener('click', () => {
+                document.getElementById('confirm-modal').classList.add('active');
+            });
+
+            document.getElementById('modal-cancel').addEventListener('click', () => {
+                document.getElementById('confirm-modal').classList.remove('active');
+            });
+
+            document.getElementById('confirm-modal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+            });
+
+            document.getElementById('modal-confirm').addEventListener('click', async () => {
+                document.getElementById('confirm-modal').classList.remove('active');
+                try {
+                    const res = await fetch('/buy-now', { method: 'POST' });
+                    const data = await res.json();
+                    if (res.ok) {
+                        showToast('Order placed successfully! 🎉');
+                        await loadCart();
                     } else {
-                        data.forEach(item => {
-                            const product = item;
-                            const discountedPrice = product.discounted_price || product.original_price;  // Fallback if discounted_price is missing
-
-                            totalAmount += discountedPrice * item.quantity;
-
-                            cartContainer.innerHTML += `
-                                <div class="product-card">
-                                    <img src="${product.image}" alt="${product.product_name}">
-                                    <div>
-                                        <h3>${product.product_name}</h3>
-                                        <p class="price">₹${discountedPrice} x ${item.quantity}</p>
-                                    </div>
-                                </div>
-                            `;
-                        });
+                        showToast(data.error || 'Failed to place order.', 'error');
                     }
-
-                    totalContainer.innerHTML = `<h3>Total: ₹${totalAmount.toFixed(2)}</h3>`;
-                })
-                .catch(error => console.error('Error fetching cart:', error));
-
-            document.getElementById('buy-now').addEventListener('click', () => {
-                fetch(`/buy-now?username=${username}`, { method: 'POST' })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Order placed successfully!');
-                    })
-                    .catch(error => console.error('Error placing order:', error));
+                } catch { showToast('Something went wrong.', 'error'); }
             });
         });
+
+        async function loadCart() {
+            const cartContainer = document.getElementById('cart-container');
+            const summarySection = document.getElementById('summary-section');
+
+            try {
+                const response = await fetch('/cart');
+                if (!response.ok) throw new Error('Server error');
+                const data = await response.json();
+
+                if (!Array.isArray(data) || data.length === 0) {
+                    cartContainer.innerHTML =
+                        '<div class="empty-state">' +
+                            '<div class="empty-icon">🛒</div>' +
+                            '<h2>Your cart is empty</h2>' +
+                            '<p>Looks like you haven\'t added anything yet.</p>' +
+                            '<a href="/products.html" class="btn btn-primary">Browse Products</a>' +
+                        '</div>';
+                    summarySection.style.display = 'none';
+                    return;
+                }
+
+                summarySection.style.display = 'block';
+                let totalAmount = 0;
+                cartContainer.innerHTML = '';
+
+                data.forEach(item => {
+                    let imageUrl = item.image || '';
+                    try {
+                        const parsed = JSON.parse(imageUrl);
+                        if (Array.isArray(parsed)) imageUrl = parsed[0] || '';
+                    } catch {}
+
+                    const price = parseFloat(item.discounted_price) || parseFloat(item.retail_price) || 0;
+                    const lineTotal = price * item.quantity;
+                    totalAmount += lineTotal;
+
+                    const div = document.createElement('div');
+                    div.className = 'cart-item animate-in';
+                    div.innerHTML =
+                        '<img src="' + (imageUrl || 'https://via.placeholder.com/90/1a1a2e/d4a853?text=No+Img') + '" alt="' + item.product_name + '" onerror="this.src=\'https://via.placeholder.com/90/1a1a2e/d4a853?text=No+Img\'">' +
+                        '<div class="cart-item-info">' +
+                            '<h3>' + item.product_name + '</h3>' +
+                            '<span class="item-price">₹' + price.toFixed(2) + '</span>' +
+                        '</div>' +
+                        '<div class="quantity-control">' +
+                            '<button class="qty-dec" data-id="' + item.uniq_id + '">−</button>' +
+                            '<span class="qty-value">' + item.quantity + '</span>' +
+                            '<button class="qty-inc" data-id="' + item.uniq_id + '">+</button>' +
+                        '</div>' +
+                        '<button class="btn btn-danger btn-icon btn-remove" data-id="' + item.uniq_id + '" title="Remove">✕</button>';
+
+                    cartContainer.appendChild(div);
+                });
+
+                document.getElementById('subtotal').textContent = '₹' + totalAmount.toFixed(2);
+                document.getElementById('total-amount').textContent = '₹' + totalAmount.toFixed(2);
+
+                // Quantity controls
+                document.querySelectorAll('.qty-inc').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await fetch('/cart/' + btn.dataset.id, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'increment' })
+                        });
+                        await loadCart();
+                    });
+                });
+
+                document.querySelectorAll('.qty-dec').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await fetch('/cart/' + btn.dataset.id, {
+                            method: 'PATCH',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ action: 'decrement' })
+                        });
+                        await loadCart();
+                    });
+                });
+
+                // Remove
+                document.querySelectorAll('.btn-remove').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        await fetch('/cart/' + btn.dataset.id, { method: 'DELETE' });
+                        showToast('Item removed from cart');
+                        await loadCart();
+                    });
+                });
+            } catch (error) {
+                cartContainer.innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div><h2>Failed to load cart</h2><p>Please try again later.</p></div>';
+            }
+        }
     </script>
 </body>
 </html>

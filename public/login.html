@@ -3,69 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - E-Commerce</title>
+    <title>Sign In — KART</title>
+    <meta name="description" content="Sign in to your KART account to access your cart, wishlist, and order history.">
+    <link rel="stylesheet" href="styles.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: var(--space-xl);
         }
 
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .auth-page::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(212, 168, 83, 0.06) 0%, transparent 60%);
         }
 
-        h1 {
-            color: #333;
-        }
-
-        label {
-            font-size: 14px;
-            color: #555;
-        }
-
-        input {
+        .auth-card {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.6s var(--ease-out) both;
         }
 
-        .button {
-            padding: 15px 30px;
-            margin: 20px 0;
-            font-size: 16px;
-            color: white;
-            background-color: #4CAF50;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .auth-brand {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
         }
 
-        .button:hover {
-            background-color: #45a049;
+        .auth-brand a {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: 6px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .auth-form-card {
+            padding: var(--space-xl) var(--space-xl) var(--space-lg);
+        }
+
+        .auth-form-card h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+        }
+
+        .auth-form-card .subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: var(--space-xl);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: var(--space-lg);
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            font-weight: 600;
+        }
+
+        .error-banner {
+            background: var(--danger-bg);
+            border: 1px solid rgba(248, 113, 113, 0.2);
+            color: var(--danger);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            margin-bottom: var(--space-lg);
+            display: none;
+        }
+
+        .error-banner.visible {
+            display: block;
+            animation: fadeInUp 0.3s var(--ease-out);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        <form method="POST" action="/login">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit" class="button">Login</button>
-        </form>
+    <div class="auth-page">
+        <div class="auth-card">
+            <div class="auth-brand">
+                <a href="/">KART</a>
+            </div>
+            <div class="glass-card auth-form-card">
+                <h1>Welcome back</h1>
+                <p class="subtitle">Sign in to continue shopping</p>
+                <div class="error-banner" id="error-banner"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-input" type="text" id="username" name="username" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-input" type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="btn-login">Sign In</button>
+                </form>
+                <div class="auth-footer">
+                    Don't have an account? <a href="/register">Create one</a>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const errorBanner = document.getElementById('error-banner');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                errorBanner.textContent = 'Please fill in all fields.';
+                errorBanner.classList.add('visible');
+                return;
+            }
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    window.location.href = '/products.html';
+                } else {
+                    errorBanner.textContent = data.error || 'Invalid credentials.';
+                    errorBanner.classList.add('visible');
+                }
+            } catch (err) {
+                errorBanner.textContent = 'Something went wrong. Please try again.';
+                errorBanner.classList.add('visible');
+            }
+        });
+    </script>
 </body>
 </html>

@@ -3,303 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tantan Website</title>
+    <title>Products — KART</title>
+    <meta name="description" content="Browse our curated collection of premium products at unbeatable prices on KART.">
+    <link rel="stylesheet" href="styles.css">
     <style>
-         body {
-            font-family: 'Segoe UI', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f6fa;
-        }
-
-        h1 {
-            text-align: center;
-            padding: 20px;
-            color: #2f3640;
-            font-weight: 600;
-            font-size: 32px;
-        }
-
-        #navbar {
-            display: flex;
-            justify-content: center;
-            background-color: #2f3640;
-            padding: 12px;
-        }
-
-        #navbar a {
-            color: white;
-            margin: 0 20px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 16px;
-        }
-
-        #navbar a:hover {
-            text-decoration: underline;
-            color: #00a8ff;
-        }
-
-        #product-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .product-card {
-            width: 260px;
-            background-color: #fff;
-            border-radius: 16px;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-6px);
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .product-details {
-            padding: 16px;
-        }
-
-        .product-card h3 {
-            font-size: 18px;
-            margin: 8px 0 10px;
-            color: #2f3640;
-            height: 48px;
-            overflow: hidden;
-        }
-
-        .product-card .description {
-            font-size: 14px;
-            color: #636e72;
-            min-height: 48px;
-            overflow: hidden;
-        }
-
-        .read-more {
-            color: #0984e3;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 5px;
-            display: inline-block;
-        }
-
-        .price {
-            font-size: 16px;
-            margin-top: 12px;
-        }
-
-        .price .new-price {
-            color: #00b894;
-            font-weight: 600;
-        }
-
-        .price span {
-            text-decoration: line-through;
-            color: #d63031;
-            margin-left: 8px;
-            font-size: 14px;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 16px 16px;
-        }
-
-        button {
-            padding: 8px 14px;
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 20px;
-            border: none;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .add-to-cart {
-            background-color: #00b894;
-            color: white;
-        }
-
-        .add-to-cart:hover {
-            background-color: #019875;
-        }
-
-        .add-to-wishlist {
-            background-color: #dfe6e9;
-            color: #2d3436;
-        }
-
-        .add-to-wishlist:hover {
-            background-color: #b2bec3;
-        }
-
-        /* Logo */
-        .logo {
-            font-family: 'Segoe UI', sans-serif;
-            font-size: 48px;
-            font-weight: bold;
-            color: #f39c12;
+        .toolbar {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin-top: 20px;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-lg) var(--space-lg) 0;
+            gap: var(--space-md);
+            flex-wrap: wrap;
         }
 
-        .logo span {
-            margin-left: 10px;
-            font-size: 32px;
-            color: #2f3640;
-        }
-
-        .logo .arrow {
-            font-size: 16px;
-            color: #f39c12;
-            margin-left: 5px;
-            transform: rotate(-45deg);
-        }
-        .description {
+        .results-count {
             font-size: 14px;
-            color: #636e72;
-            line-height: 1.2em;
-            max-height: 3.6em;
-
-            display: -webkit-box;
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: var(--text-muted);
         }
 
- 
+        .results-count span {
+            color: var(--accent);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <div id="navbar">
-        <a id="wishlist-link" href="#">Go to Wishlist</a>
-        <a id="cart-link" href="#">Go to Cart</a>
-    </div>
-    <header class="logo">
-        🛍️ <span>MyShop</span>
-    </header>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="/" class="navbar-brand">
+            <span class="brand-icon">🛒</span> KART
+        </a>
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" class="search-input" id="search-input" placeholder="Search products...">
+        </div>
+        <ul class="navbar-links">
+            <li><a href="/products.html" class="active" id="nav-products">Products</a></li>
+            <li><a href="/wishlist.html" id="nav-wishlist">♡ Wishlist</a></li>
+            <li><a href="/cart.html" id="nav-cart">🛒 Cart</a></li>
+        </ul>
+        <div class="navbar-actions">
+            <span class="navbar-user">Hello, <span id="user-greeting">User</span></span>
+            <button class="btn btn-sm btn-secondary" id="logout-btn">Sign Out</button>
+        </div>
+    </nav>
 
-    <h1>Products</h1>
-    <div id="product-container"></div>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>Our Products</h1>
+        <p>Curated picks, unbeatable prices</p>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+        <div class="results-count" id="results-count"></div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid stagger" id="product-container"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const productContainer = document.getElementById('product-container');
-            const params = new URLSearchParams(window.location.search);
-            const username = params.get('username'); // Extract username from URL
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const icons = { success: '✓', error: '✕', info: 'ℹ' };
+            toast.className = 'toast toast-' + type;
+            toast.innerHTML = '<span>' + (icons[type] || '') + '</span> ' + message;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3200);
+        }
 
-            // Redirect to login page if username is not provided
-            if (!username) {
-                alert('User not logged in.');
-                window.location.href = '/login'; // Replace with the actual login page URL
+        document.addEventListener('DOMContentLoaded', async () => {
+            const productContainer = document.getElementById('product-container');
+            const searchInput = document.getElementById('search-input');
+            const resultsCount = document.getElementById('results-count');
+
+            // Auth check
+            try {
+                const meRes = await fetch('/me');
+                if (!meRes.ok) {
+                    window.location.href = '/login';
+                    return;
+                }
+                const meData = await meRes.json();
+                document.getElementById('user-greeting').textContent = meData.username;
+            } catch {
+                window.location.href = '/login';
                 return;
             }
 
-            // Update navbar links dynamically
-            document.getElementById('wishlist-link').href = `wishlist.html?username=${encodeURIComponent(username)}`;
-            document.getElementById('cart-link').href = `cart.html?username=${encodeURIComponent(username)}`;
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', async () => {
+                await fetch('/logout', { method: 'POST' });
+                window.location.href = '/login';
+            });
 
-            // Fetch product data from backend
-            fetch('/products')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(products => {
-                    if (!products || products.length === 0) {
-                        productContainer.innerHTML = '<p>No products available at the moment.</p>';
-                        return;
-                    }
+            // Show skeleton loaders
+            let skeletonHTML = '';
+            for (let i = 0; i < 8; i++) {
+                skeletonHTML += '<div class="skeleton-card animate-in"><div class="skeleton skeleton-image"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text-sm"></div><div class="skeleton skeleton-text-sm"></div></div>';
+            }
+            productContainer.innerHTML = skeletonHTML;
 
-                    products.forEach(product => {
-                        const productImage = product.image || 'https://via.placeholder.com/250';
-                        const fullDescription = product.description || 'No description available.';
-                        const shortDescription = fullDescription.split(' ').slice(0, 50).join(' ') + '...';
-                        const isLongDescription = fullDescription.split(' ').length > 50;
+            // Fetch products
+            let allProducts = [];
+            try {
+                const response = await fetch('/products');
+                if (!response.ok) throw new Error('Failed to fetch');
+                allProducts = await response.json();
+                renderProducts(allProducts);
+            } catch (error) {
+                productContainer.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><h2>Failed to load products</h2><p>Please try again later.</p></div>';
+            }
 
-                        // Create product card
-                        const card = document.createElement('div');
-                        card.className = 'product-card';
+            // Search
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                if (!query) {
+                    renderProducts(allProducts);
+                    return;
+                }
+                const filtered = allProducts.filter(p =>
+                    (p.name && p.name.toLowerCase().includes(query)) ||
+                    (p.description && p.description.toLowerCase().includes(query))
+                );
+                renderProducts(filtered);
+            });
 
-                        card.innerHTML = `
-                            <img src="${productImage}" alt="${product.name || 'Product Image'}">
-                            <div class="product-details">
-                                <h3>${product.name || 'Unnamed Product'}</h3>
-                                <p class="description">${isLongDescription ? shortDescription : fullDescription}</p>
-                                ${isLongDescription ? '<span class="read-more">Read More</span>' : ''}
-                                <div class="price">
-                                    ₹${product.discountedPrice || 'N/A'}
-                                    ${product.retailPrice ? `<span>₹${product.retailPrice}</span>` : ''}
-                                </div>
-                            </div>
-                            <div class="action-buttons">
-                                <button class="add-to-wishlist" data-product-id="${product.id}">Add to Wishlist</button>
-                                <button class="add-to-cart" data-product-id="${product.id}">Add to Cart</button>
-                            </div>
-                        `;
+            function renderProducts(products) {
+                productContainer.innerHTML = '';
+                resultsCount.innerHTML = '<span>' + products.length + '</span> product' + (products.length !== 1 ? 's' : '') + ' found';
 
-                        productContainer.appendChild(card);
+                if (products.length === 0) {
+                    productContainer.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><h2>No products found</h2><p>Try a different search term.</p></div>';
+                    return;
+                }
 
-                        // Add event listener for Read More / Read Less
-                        if (isLongDescription) {
-                            const readMore = card.querySelector('.read-more');
-                            const description = card.querySelector('.description');
-                            readMore.addEventListener('click', () => {
-                                if (readMore.textContent === 'Read More') {
-                                    description.textContent = fullDescription;
-                                    readMore.textContent = 'Read Less';
-                                } else {
-                                    description.textContent = shortDescription;
-                                    readMore.textContent = 'Read More';
-                                }
-                            });
-                        }
-                    });
+                products.forEach(product => {
+                    const img = product.image || 'https://via.placeholder.com/300x220/1a1a2e/d4a853?text=No+Image';
+                    const desc = product.description || 'No description available.';
+                    const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
+                    const retail = parseFloat(product.retailPrice) || 0;
+                    const discounted = parseFloat(product.discountedPrice) || 0;
+                    const discount = retail > 0 ? Math.round(((retail - discounted) / retail) * 100) : 0;
 
-                    // Add to Wishlist and Cart functionality
-                    document.querySelectorAll('.add-to-wishlist').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const productId = e.target.getAttribute('data-product-id');
-                            fetch(`/add-to-wishlist/${productId}?username=${encodeURIComponent(username)}`, { method: 'POST' })
-                                .then(response => response.json())
-                                .then(data => alert(data.message || 'Added to wishlist!'))
-                                .catch(error => console.error('Error adding to wishlist:', error));
-                        });
-                    });
+                    const card = document.createElement('div');
+                    card.className = 'product-card animate-in';
+                    card.innerHTML =
+                        '<div class="image-wrapper">' +
+                            '<img class="card-image" src="' + img + '" alt="' + (product.name || 'Product') + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x220/1a1a2e/d4a853?text=No+Image\'">' +
+                        '</div>' +
+                        '<div class="card-body">' +
+                            '<h3 class="card-title">' + (product.name || 'Unnamed Product') + '</h3>' +
+                            '<p class="card-description">' + shortDesc + '</p>' +
+                            '<div class="card-price">' +
+                                '<span class="price-current">₹' + discounted.toFixed(2) + '</span>' +
+                                (retail > discounted ? '<span class="price-original">₹' + retail.toFixed(2) + '</span>' : '') +
+                                (discount > 0 ? '<span class="price-badge">' + discount + '% OFF</span>' : '') +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="card-actions">' +
+                            '<button class="btn btn-secondary btn-wishlist" data-id="' + product.id + '">♡ Wishlist</button>' +
+                            '<button class="btn btn-primary btn-cart" data-id="' + product.id + '">+ Cart</button>' +
+                        '</div>';
 
-                    document.querySelectorAll('.add-to-cart').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const productId = e.target.getAttribute('data-product-id');
-                            fetch(`/add-to-cart/${productId}?username=${encodeURIComponent(username)}`, { method: 'POST' })
-                                .then(response => response.json())
-                                .then(data => alert(data.message || 'Added to cart!'))
-                                .catch(error => console.error('Error adding to cart:', error));
-                        });
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching products:', error);
-                    productContainer.innerHTML = '<p>Failed to load products. Please try again later.</p>';
+                    productContainer.appendChild(card);
                 });
+
+                // Attach event listeners
+                document.querySelectorAll('.btn-wishlist').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-id');
+                        try {
+                            const res = await fetch('/add-to-wishlist/' + id, { method: 'POST' });
+                            const data = await res.json();
+                            showToast(data.message || 'Added to wishlist!');
+                        } catch { showToast('Failed to add to wishlist', 'error'); }
+                    });
+                });
+
+                document.querySelectorAll('.btn-cart').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-id');
+                        try {
+                            const res = await fetch('/add-to-cart/' + id, { method: 'POST' });
+                            const data = await res.json();
+                            showToast(data.message || 'Added to cart!');
+                        } catch { showToast('Failed to add to cart', 'error'); }
+                    });
+                });
+            }
         });
     </script>
 </body>
