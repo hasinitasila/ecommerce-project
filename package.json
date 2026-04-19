@@ -1,8 +1,11 @@
 {
   "name": "kart-ecommerce",
   "version": "1.0.0",
-  "description": "NOVA - Premium E-Commerce Platform",
+  "description": "KART - E-Commerce Platform",
   "main": "app.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node app.js",
     "dev": "node app.js",
