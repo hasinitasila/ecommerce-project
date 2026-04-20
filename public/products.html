@@ -147,7 +147,10 @@
 
                 products.forEach(product => {
                     const PLACEHOLDER = window.PLACEHOLDER;
-                    const img = product.image || PLACEHOLDER;
+                    let img = product.image || PLACEHOLDER;
+                    if (img.includes('flixcart.com')) {
+                        img = img.replace(/http:\/\/img[a-z0-9]*\.flixcart\.com/, 'https://rukminim1.flixcart.com');
+                    }
                     const desc = product.description || 'No description available.';
                     const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
                     const retail = parseFloat(product.retailPrice) || 0;

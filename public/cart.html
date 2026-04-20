@@ -66,6 +66,8 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script>
+        window.PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Crect width='90' height='90' fill='%231a1a2e'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='10' fill='%23d4a853' text-anchor='middle' dy='.3em'%3ENo Img%3C/text%3E%3C/svg%3E";
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -148,6 +150,12 @@
                         const parsed = JSON.parse(imageUrl);
                         if (Array.isArray(parsed)) imageUrl = parsed[0] || '';
                     } catch {}
+                    
+                    if (imageUrl.includes('flixcart.com')) {
+                        imageUrl = imageUrl.replace(/http:\/\/img[a-z0-9]*\.flixcart\.com/, 'https://rukminim1.flixcart.com');
+                    }
+                    
+                    imageUrl = imageUrl || window.PLACEHOLDER;
 
                     const price = parseFloat(item.discounted_price) || parseFloat(item.retail_price) || 0;
                     const lineTotal = price * item.quantity;
@@ -156,7 +164,7 @@
                     const div = document.createElement('div');
                     div.className = 'cart-item animate-in';
                     div.innerHTML =
-                        '<img src="' + (imageUrl || 'https://via.placeholder.com/90/1a1a2e/d4a853?text=No+Img') + '" alt="' + item.product_name + '" onerror="this.src=\'https://via.placeholder.com/90/1a1a2e/d4a853?text=No+Img\'">' +
+                        '<img src="' + imageUrl + '" alt="' + item.product_name + '" onerror="this.onerror=null;this.src=window.PLACEHOLDER">' +
                         '<div class="cart-item-info">' +
                             '<h3>' + item.product_name + '</h3>' +
                             '<span class="item-price">₹' + price.toFixed(2) + '</span>' +
