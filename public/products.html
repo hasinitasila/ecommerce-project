@@ -67,6 +67,8 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script>
+        window.PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='220'%3E%3Crect width='300' height='220' fill='%231a1a2e'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='14' fill='%23d4a853' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E";
+
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -144,7 +146,8 @@
                 }
 
                 products.forEach(product => {
-                    const img = product.image || 'https://via.placeholder.com/300x220/1a1a2e/d4a853?text=No+Image';
+                    const PLACEHOLDER = window.PLACEHOLDER;
+                    const img = product.image || PLACEHOLDER;
                     const desc = product.description || 'No description available.';
                     const shortDesc = desc.length > 80 ? desc.substring(0, 80) + '...' : desc;
                     const retail = parseFloat(product.retailPrice) || 0;
@@ -155,7 +158,7 @@
                     card.className = 'product-card animate-in';
                     card.innerHTML =
                         '<div class="image-wrapper">' +
-                            '<img class="card-image" src="' + img + '" alt="' + (product.name || 'Product') + '" loading="lazy" onerror="this.src=\'https://via.placeholder.com/300x220/1a1a2e/d4a853?text=No+Image\'">' +
+                            '<img class="card-image" src="' + img + '" alt="' + (product.name || 'Product') + '" loading="lazy" onerror="this.onerror=null;this.src=window.PLACEHOLDER">' +
                         '</div>' +
                         '<div class="card-body">' +
                             '<h3 class="card-title">' + (product.name || 'Unnamed Product') + '</h3>' +
