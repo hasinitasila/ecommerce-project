@@ -2,14 +2,17 @@ const { Client } = require('pg');
 const xlsx = require('xlsx');
 const path = require('path');
 
-// PostgreSQL connection configuration
-const client = new Client({
-    user: 'postgres',       // Replace with your PostgreSQL username
-    host: 'localhost',           // Replace with your PostgreSQL host
-    database: 'project',       // Your database name
-    password: '1234',   // Replace with your PostgreSQL password
-    port: 5432,                  // PostgreSQL default port
-});
+require('dotenv').config();
+
+const client = process.env.DATABASE_URL
+    ? new Client({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } })
+    : new Client({
+        user: 'postgres',
+        host: 'localhost',
+        database: 'project',
+        password: '1234',
+        port: 5432,
+    });
 
 // Function to read Excel file and insert data into the products table
 async function insertProductsFromExcel(filePath) {
