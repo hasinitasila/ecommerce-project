@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -74,16 +75,19 @@
                 flex-direction: column;
                 text-align: center;
             }
+
             .wishlist-item-actions {
                 flex-direction: row;
                 width: 100%;
             }
+
             .wishlist-item-actions .btn {
                 flex: 1;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -151,10 +155,10 @@
                 if (!Array.isArray(data) || data.length === 0) {
                     container.innerHTML =
                         '<div class="empty-state">' +
-                            '<div class="empty-icon">♡</div>' +
-                            '<h2>Your wishlist is empty</h2>' +
-                            '<p>Save items you love to revisit them later.</p>' +
-                            '<a href="/products.html" class="btn btn-primary">Browse Products</a>' +
+                        '<div class="empty-icon">♡</div>' +
+                        '<h2>Your wishlist is empty</h2>' +
+                        '<p>Save items you love to revisit them later.</p>' +
+                        '<a href="/products.html" class="btn btn-primary">Browse Products</a>' +
                         '</div>';
                     return;
                 }
@@ -164,12 +168,12 @@
                     try {
                         const parsed = JSON.parse(imageUrl);
                         if (Array.isArray(parsed)) imageUrl = parsed[0] || '';
-                    } catch {}
-                    
+                    } catch { }
+
                     if (imageUrl.includes('flixcart.com')) {
                         imageUrl = imageUrl.replace(/http:\/\/img[a-z0-9]*\.flixcart\.com/, 'https://rukminim1.flixcart.com');
                     }
-                    
+
                     imageUrl = imageUrl || window.PLACEHOLDER;
 
                     const price = parseFloat(product.discounted_price) || parseFloat(product.retail_price) || 0;
@@ -180,13 +184,13 @@
                     div.innerHTML =
                         '<img src="' + imageUrl + '" alt="' + product.product_name + '" onerror="this.onerror=null;this.src=window.PLACEHOLDER">' +
                         '<div class="wishlist-item-info">' +
-                            '<h3>' + product.product_name + '</h3>' +
-                            '<p class="desc">' + desc + '</p>' +
-                            '<span class="price">₹' + price.toFixed(2) + '</span>' +
+                        '<h3>' + product.product_name + '</h3>' +
+                        '<p class="desc">' + desc + '</p>' +
+                        '<span class="price">₹' + price.toFixed(2) + '</span>' +
                         '</div>' +
                         '<div class="wishlist-item-actions">' +
-                            '<button class="btn btn-success btn-sm btn-move-cart" data-id="' + product.uniq_id + '">+ Cart</button>' +
-                            '<button class="btn btn-danger btn-sm btn-remove-wish" data-id="' + product.uniq_id + '">✕ Remove</button>' +
+                        '<button class="btn btn-success btn-sm btn-move-cart" data-id="' + product.uniq_id + '">+ Cart</button>' +
+                        '<button class="btn btn-danger btn-sm btn-remove-wish" data-id="' + product.uniq_id + '">✕ Remove</button>' +
                         '</div>';
 
                     container.appendChild(div);
@@ -220,4 +224,5 @@
         }
     </script>
 </body>
+
 </html>

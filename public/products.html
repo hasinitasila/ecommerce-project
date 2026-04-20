@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +30,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
@@ -161,20 +163,20 @@
                     card.className = 'product-card animate-in';
                     card.innerHTML =
                         '<div class="image-wrapper">' +
-                            '<img class="card-image" src="' + img + '" alt="' + (product.name || 'Product') + '" loading="lazy" onerror="this.onerror=null;this.src=window.PLACEHOLDER">' +
+                        '<img class="card-image" src="' + img + '" alt="' + (product.name || 'Product') + '" loading="lazy" onerror="this.onerror=null;this.src=window.PLACEHOLDER">' +
                         '</div>' +
                         '<div class="card-body">' +
-                            '<h3 class="card-title">' + (product.name || 'Unnamed Product') + '</h3>' +
-                            '<p class="card-description">' + shortDesc + '</p>' +
-                            '<div class="card-price">' +
-                                '<span class="price-current">₹' + discounted.toFixed(2) + '</span>' +
-                                (retail > discounted ? '<span class="price-original">₹' + retail.toFixed(2) + '</span>' : '') +
-                                (discount > 0 ? '<span class="price-badge">' + discount + '% OFF</span>' : '') +
-                            '</div>' +
+                        '<h3 class="card-title">' + (product.name || 'Unnamed Product') + '</h3>' +
+                        '<p class="card-description">' + shortDesc + '</p>' +
+                        '<div class="card-price">' +
+                        '<span class="price-current">₹' + discounted.toFixed(2) + '</span>' +
+                        (retail > discounted ? '<span class="price-original">₹' + retail.toFixed(2) + '</span>' : '') +
+                        (discount > 0 ? '<span class="price-badge">' + discount + '% OFF</span>' : '') +
+                        '</div>' +
                         '</div>' +
                         '<div class="card-actions">' +
-                            '<button class="btn btn-secondary btn-wishlist" data-id="' + product.id + '">♡ Wishlist</button>' +
-                            '<button class="btn btn-primary btn-cart" data-id="' + product.id + '">+ Cart</button>' +
+                        '<button class="btn btn-secondary btn-wishlist" data-id="' + product.id + '">♡ Wishlist</button>' +
+                        '<button class="btn btn-primary btn-cart" data-id="' + product.id + '">+ Cart</button>' +
                         '</div>';
 
                     productContainer.appendChild(card);
@@ -206,4 +208,5 @@
         });
     </script>
 </body>
+
 </html>

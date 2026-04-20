@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -109,6 +110,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="auth-page">
         <div class="auth-card">
@@ -122,19 +124,25 @@
                 <form id="register-form">
                     <div class="form-group">
                         <label class="form-label" for="username">Username</label>
-                        <input class="form-input" type="text" id="username" name="username" placeholder="Choose a username" required>
+                        <input class="form-input" type="text" id="username" name="username"
+                            placeholder="Choose a username" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="email">Email</label>
-                        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+                        <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com"
+                            required>
                     </div>
                     <div class="form-group">
                         <label class="form-label" for="password">Password</label>
-                        <input class="form-input" type="password" id="password" name="password" placeholder="Create a strong password" required>
-                        <div class="password-strength"><div class="bar" id="strength-bar"></div></div>
+                        <input class="form-input" type="password" id="password" name="password"
+                            placeholder="Create a strong password" required>
+                        <div class="password-strength">
+                            <div class="bar" id="strength-bar"></div>
+                        </div>
                         <div class="strength-text" id="strength-text"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="btn-register">Create Account</button>
+                    <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="btn-register">Create
+                        Account</button>
                 </form>
                 <div class="auth-footer">
                     Already have an account? <a href="/login">Sign in</a>
@@ -210,4 +218,5 @@
         });
     </script>
 </body>
+
 </html>

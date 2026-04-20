@@ -61,7 +61,9 @@
 }
 
 /* --- Reset & Base --- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -203,7 +205,7 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(255,255,255,0.1), transparent);
+  background: linear-gradient(rgba(255, 255, 255, 0.1), transparent);
   opacity: 0;
   transition: opacity var(--duration-fast);
 }
@@ -619,13 +621,27 @@ img {
 }
 
 @keyframes toastSlideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes toastFadeOut {
-  from { opacity: 1; transform: translateX(0); }
-  to { opacity: 0; transform: translateX(30px); }
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
 }
 
 /* --- Page Container --- */
@@ -790,8 +806,13 @@ img {
 }
 
 @keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .skeleton-card {
@@ -827,6 +848,7 @@ img {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -838,18 +860,53 @@ img {
 }
 
 /* Staggered children */
-.stagger > *:nth-child(1) { animation-delay: 0.05s; }
-.stagger > *:nth-child(2) { animation-delay: 0.1s; }
-.stagger > *:nth-child(3) { animation-delay: 0.15s; }
-.stagger > *:nth-child(4) { animation-delay: 0.2s; }
-.stagger > *:nth-child(5) { animation-delay: 0.25s; }
-.stagger > *:nth-child(6) { animation-delay: 0.3s; }
-.stagger > *:nth-child(7) { animation-delay: 0.35s; }
-.stagger > *:nth-child(8) { animation-delay: 0.4s; }
-.stagger > *:nth-child(9) { animation-delay: 0.45s; }
-.stagger > *:nth-child(10) { animation-delay: 0.5s; }
-.stagger > *:nth-child(11) { animation-delay: 0.55s; }
-.stagger > *:nth-child(12) { animation-delay: 0.6s; }
+.stagger>*:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.stagger>*:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger>*:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.stagger>*:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.stagger>*:nth-child(5) {
+  animation-delay: 0.25s;
+}
+
+.stagger>*:nth-child(6) {
+  animation-delay: 0.3s;
+}
+
+.stagger>*:nth-child(7) {
+  animation-delay: 0.35s;
+}
+
+.stagger>*:nth-child(8) {
+  animation-delay: 0.4s;
+}
+
+.stagger>*:nth-child(9) {
+  animation-delay: 0.45s;
+}
+
+.stagger>*:nth-child(10) {
+  animation-delay: 0.5s;
+}
+
+.stagger>*:nth-child(11) {
+  animation-delay: 0.55s;
+}
+
+.stagger>*:nth-child(12) {
+  animation-delay: 0.6s;
+}
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
@@ -857,29 +914,36 @@ img {
     padding: 0 var(--space-md);
     height: 60px;
   }
+
   .navbar-brand {
     font-size: 20px;
     letter-spacing: 2px;
   }
+
   .navbar-links {
     gap: var(--space-sm);
   }
+
   .navbar-links a {
     font-size: 12px;
     padding: var(--space-xs) var(--space-sm);
   }
+
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: var(--space-md);
     padding: var(--space-md);
   }
+
   .page-container {
     padding: var(--space-md);
   }
+
   .cart-item {
     flex-direction: column;
     text-align: center;
   }
+
   .navbar-user {
     display: none;
   }
@@ -889,16 +953,39 @@ img {
   .product-grid {
     grid-template-columns: 1fr;
   }
+
   .navbar-links a {
     font-size: 11px;
   }
 }
 
 /* --- Utility --- */
-.text-center { text-align: center; }
-.text-muted { color: var(--text-muted); }
-.mt-sm { margin-top: var(--space-sm); }
-.mt-md { margin-top: var(--space-md); }
-.mt-lg { margin-top: var(--space-lg); }
-.mb-md { margin-bottom: var(--space-md); }
-.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-sm {
+  margin-top: var(--space-sm);
+}
+
+.mt-md {
+  margin-top: var(--space-md);
+}
+
+.mt-lg {
+  margin-top: var(--space-lg);
+}
+
+.mb-md {
+  margin-bottom: var(--space-md);
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

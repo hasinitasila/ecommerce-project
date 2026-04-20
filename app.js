@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const bcrypt = require('bcryptjs');
-const session = require('express-session'); 
+const session = require('express-session');
 const path = require('path');
 
 require('dotenv').config();
@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 // --- Middleware ---
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json()); 
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Security headers
@@ -25,12 +25,12 @@ app.use((req, res, next) => {
 });
 
 app.use(session({
-    secret: process.env.SESSION_SECRET, 
-    resave: false,                       
-    saveUninitialized: false,            
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-        httpOnly: true,   
-        maxAge: 1000 * 60 * 60 * 24, 
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
     }
 }));
 
@@ -165,7 +165,7 @@ app.post('/logout', (req, res) => {
         if (err) {
             return res.status(500).json({ success: false, error: 'Could not log out.' });
         }
-        res.clearCookie('connect.sid'); 
+        res.clearCookie('connect.sid');
         res.json({ success: true, message: 'Logged out.' });
     });
 });
