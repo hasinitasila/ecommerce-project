@@ -2,6 +2,8 @@
 
 A full-stack e-commerce web application built with Node.js, Express, and PostgreSQL.
 
+**🔗 Live Demo:** [https://ecommerce-project-316f.onrender.com](https://ecommerce-project-316f.onrender.com)
+
 ## Tech Stack
 
 - **Backend:** Node.js, Express.js
